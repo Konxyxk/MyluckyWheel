@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="com.lw.mapper.RuntableMapper">
+    	<resultMap type="com.lw.entity.RuntableDomain" id="RuntableDomain">
+    		<id column="id" property="id"/>
+    		<result column="prize" property="prize"/>
+    		<result column="v" property="v"/>
+    		<result column="userphone" property="userphone"/>
+    		<result column="awardDate" property="awardDate"/>
+    	</resultMap> 
+    	
+        <insert id="add" parameterType="RuntableDomain" >
+            insert into turntable ( id,prize,v ) values (#{id},#{prize},#{v});    
+        </insert>
+        
+        
+         
+         <update id="status" parameterType="Integer">
+          	update turntable set status=1 where v=#{awardValue};
+         </update>
+         <select id="getAward"  resultType="RuntableDomain">
+         	select * from turntable where status=1;
+         </select>
+         
+ 
+        <select id="list" resultType="RuntableDomain">
+            select * from   turntable  ;
+        </select>    
+        
+        <update id="updateStatus">
+        	update turntable set status=0;
+        </update>
+        
+        <update id="updatePhone">
+        	update turntable set userphone=null;
+        </update>
+        
+        <update id="addPhone" parameterType="String">
+          	update turntable set userphone=#{phone} where status=1;
+         </update>
+        
+        <update id="truncateTable">
+        	truncate table turntable;
+        </update>
+		
+		 <select id="getlist" resultType="String" >
+            select userphone from  turntable where userphone is not null ;
+        </select>            
+
+         <insert id="addAward" parameterType="RuntableDomain" >
+            insert into awardlist (prize,v,userphone,awardDate) values (#{prize},#{v},#{userphone},#{awardDate});    
+        </insert>
+        
+    </mapper>

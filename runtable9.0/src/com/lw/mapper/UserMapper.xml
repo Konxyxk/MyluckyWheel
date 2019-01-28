@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="com.lw.mapper.UserMapper">
+    	<resultMap type="com.lw.entity.User" id="User">
+    		<id column="id" property="id"/>
+    		<result column="username" property="username"/>
+    		<result column="password" property="password"/>
+    	</resultMap>  
+    	
+        <insert id="addUser" parameterType="User" statementType="CALLABLE">
+        	{call addUser(#{username,mode=IN},#{password,mode=IN})}
+        </insert>
+ 
+        <select id="list" resultType="User" parameterType="String" statementType="CALLABLE">
+            {call selectByUsername(#{username,mode=IN})}
+        </select>    
+        
+    </mapper>
